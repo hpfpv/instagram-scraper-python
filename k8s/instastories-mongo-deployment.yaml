@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: instastories-mongo-service
+  namespace: instastories-namespace
+spec:
+  selector:
+    app: instastories
+    tier: mongo
+  ports:
+    - protocol: TCP
+      port: 27017
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: instastories-mongo-pv-claim
+  namespace: instastories-namespace
+  labels:
+    app: instastories
+spec:
+  storageClassName: instastories-storage
+  volumeName: instastories-mongo-pv
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: instastories-mongo-deployment
+  namespace: instastories-namespace
+  labels:
+    app: instastories
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: instastories
+      tier: mongo
+  template:
+    metadata:
+      labels:
+        app: instastories
+        tier: mongo
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:latest
+        resources:
+          limits:
+            memory: 128Mi
+            cpu: "0.5"
+          requests:
+            memory: 128Mi
+            cpu: "0.5"
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom: 
+            secretKeyRef:
+              name: instastories-mongo-secret
+              key: mongo-user
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom: 
+            secretKeyRef:
+              name: instastories-mongo-secret
+              key: mongo-password
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: instastories-mongo-data
+          mountPath: /data/db
+      volumes:
+      - name: instastories-mongo-data
+        persistentVolumeClaim:
+          claimName: instastories-mongo-pv-claim
+

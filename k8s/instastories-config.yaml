@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: instastories-mongo-config
+  namespace: instastories-namespace
+data:
+  mongo-url: mongo-service
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: instastories-mongo-secret
+  namespace: instastories-namespace
+type: Opaque
+data:
+  mongo-user: YWRtaW4=
+  mongo-password: cGFzc3dvcmQ=
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: instastories-api-config
+  namespace: instastories-namespace
+data:
+  api-endpoint: instastories-api-service
