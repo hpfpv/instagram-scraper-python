@@ -38,10 +38,10 @@ spec:
         resources:
           limits:
             memory: 128Mi
-            cpu: "0.2"
+            cpu: "0.5"
           requests:
-            memory: 64Mi
-            cpu: "0.1"
+            memory: 128Mi
+            cpu: "0.2"
         env:
         - name: ME_CONFIG_MONGODB_ADMINUSERNAME
           valueFrom: 

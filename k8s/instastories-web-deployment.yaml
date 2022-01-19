@@ -12,7 +12,6 @@ spec:
     - protocol: TCP
       port: 80
       #targetPort: 80
-      nodePort: 30101
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -38,11 +37,11 @@ spec:
         image: hpfpv/instastories-web:latest
         resources:
           limits:
-            memory: 512Mi
-            cpu: "1"
-          requests:
             memory: 256Mi
             cpu: "0.5"
+          requests:
+            memory: 128Mi
+            cpu: "0.2"
         env:
         - name: API_ENDPOINT
           valueFrom: 

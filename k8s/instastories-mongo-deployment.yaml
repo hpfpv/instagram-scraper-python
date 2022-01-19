@@ -12,15 +12,32 @@ spec:
       port: 27017
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: instastories-mongo-pv
+spec:
+  capacity:
+    storage: 512Mi
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  hostPath:
+    path: /mnt/disks/kubernetes/instastories/mongo-data
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: instastories-mongo-pv-claim
+  name: instastories-mongo-pvc
   namespace: instastories-namespace
-  labels:
-    app: instastories
 spec:
-  storageClassName: instastories-storage
-  volumeName: instastories-mongo-pv
+  storageClassName: local-storage
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 512Mi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -49,8 +66,8 @@ spec:
             memory: 128Mi
             cpu: "0.5"
           requests:
-            memory: 128Mi
-            cpu: "0.5"
+            memory: 64Mi
+            cpu: "0.2"
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom: 
@@ -70,5 +87,5 @@ spec:
       volumes:
       - name: instastories-mongo-data
         persistentVolumeClaim:
-          claimName: instastories-mongo-pv-claim
+          claimName: instastories-mongo-pvc
 
