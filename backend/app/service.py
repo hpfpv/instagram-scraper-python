@@ -17,14 +17,16 @@ mongo = MongoClient(f"mongodb://{mongoUser}:{mongoPassword}@{mongoURL}:27017")
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-eventsTable = mongo.instastories.events
+
+instastoriesDb = mongo["instastories"]
+eventsCollection = instastoriesDb["events"]
 
 def getStoriesTagged(requestId, account_to_mention):
     try:
         storiesJson = check_for_new_stories(account_to_mention)
     except Exception as e:
         logger.info(e)
-        response = eventsTable.update_one(
+        response = eventsCollection.update_one(
             {
                 'requestId': requestId,
             },
@@ -36,7 +38,7 @@ def getStoriesTagged(requestId, account_to_mention):
         response = {}
         response["Update"] = "Success"
     else:
-        response = eventsTable.update_one(
+        response = eventsCollection.update_one(
             {
                 'requestId': requestId,
             },
@@ -67,7 +69,7 @@ def recordEvents(account_to_mention):
     log["message"] = json.dumps(record)
     logger.info(json.dumps(log))
 
-    eventsTable.insert_one(record)  
+    eventsCollection.insert_one(record)  
 
     getStoriesTagged(requestId, account_to_mention)
     
