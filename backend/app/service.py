@@ -9,11 +9,12 @@ from instaScraper import get_stories_tagged, download_stories
 from instaScraper.modules.download import profile_picture, story_media
 from instaScraper.modules.stories import get_followers_stories, check_for_new_stories, story_time_str
 
-mongoUser = os.environ.get('MONGO_USER')
-mongoPassword = os.environ.get('MONGO_PWD')
-mongoURL = os.environ.get('MONGO_URL')
+mongoUser = os.environ['MONGO_USER']
+mongoPassword = os.environ['MONGO_PWD']
+mongoURL = os.environ['MONGO_URL']
+dbConnectString = "mongodb://" + mongoUser + ":" + mongoPassword + "@" + mongoURL + ":27017"
 
-mongo = MongoClient(f"mongodb://{mongoUser}:{mongoPassword}@{mongoURL}:27017")
+mongo = MongoClient(dbConnectString)
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -81,6 +82,6 @@ def recordEvents(account_to_mention):
 
 
 def retrieveStories(requestId):
-    response = mongo.find_one({"requestId" : requestId})
+    response = eventsCollection.find_one({"requestId" : requestId})
 
     return json.dumps(response)

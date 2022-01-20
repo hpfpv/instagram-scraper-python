@@ -47,7 +47,7 @@ metadata:
   labels:
     app: instastories
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: instastories
@@ -60,14 +60,14 @@ spec:
     spec:
       containers:
       - name: instastories
-        image: hpfpv/instastories-api:latest
+        image: hpfpv/instastories-api:amd64-latest
         resources:
           limits:
             memory: 256Mi
             cpu: "0.5"
           requests:
-            memory: 128Mi
-            cpu: "0.2"
+            memory: 256Mi
+            cpu: "0.5"
         env:
         - name: MONGO_USER
           valueFrom: 
