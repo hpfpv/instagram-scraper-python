@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: instastories-mongo-express-service
   namespace: instastories-namespace
+  labels:
+    app: instastories
+    tier: mongo-express
 spec:
   type: NodePort
   selector:
@@ -11,7 +14,6 @@ spec:
   ports:
     - protocol: TCP
       port: 8081
-      targetPort: 8081
       nodePort: 30110
 ---
 apiVersion: apps/v1
@@ -21,6 +23,7 @@ metadata:
   namespace: instastories-namespace
   labels:
     app: instastories
+    tier: mongo-express
 spec:
   replicas: 1
   selector:
@@ -39,10 +42,10 @@ spec:
         resources:
           limits:
             memory: 128Mi
-            cpu: "0.5"
+            cpu: "0.2"
           requests:
             memory: 128Mi
-            cpu: "0.2"
+            cpu: "0.1"
         env:
         - name: ME_CONFIG_MONGODB_ADMINUSERNAME
           valueFrom: 
