@@ -4,7 +4,7 @@ metadata:
   name: instastories-mongo-config
   namespace: instastories-namespace
 data:
-  mongo-url: instastories-mongo-service
+  mongo-url: instastories-mongo-service.instastories-namespace
 ---
 apiVersion: v1
 kind: Secret
