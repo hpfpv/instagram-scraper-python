@@ -1,5 +1,8 @@
 FROM python:3.9-slim-bullseye
+
 RUN pip3 install --upgrade pip
+RUN apt-get update
+RUN apt-get install -y dnsutils 
 
 # create app folder
 RUN mkdir -p /app
