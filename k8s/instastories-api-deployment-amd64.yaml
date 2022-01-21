@@ -3,6 +3,9 @@ kind: Service
 metadata:
   name: instastories-api-service
   namespace: instastories-namespace
+  labels:
+    app: instastories
+    tier: backend
 spec:
   selector:
     app: instastories
@@ -46,6 +49,7 @@ metadata:
   namespace: instastories-namespace
   labels:
     app: instastories
+    tier: backend
 spec:
   replicas: 1
   selector:
