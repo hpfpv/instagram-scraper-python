@@ -1,4 +1,12 @@
-const apiEndpoint = $_SERVER["API_ENDPOINT"] + "/";
+// retrieve API endpoint from config file
+const fs = require("fs");
+fs.readFile(__dirname + "/config", (error, api) => {
+    if(error) {
+        throw error;
+    }
+    const apiEndpoint = api.toString() + "/";
+});
+
 
 function Storyfier(storiesArray, rootEl) {
 this.stories = storiesArray

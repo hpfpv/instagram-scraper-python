@@ -48,6 +48,8 @@ spec:
             configMapKeyRef:
               name: instastories-api-config
               key: api-endpoint
+        command: ["/bin/sh"]
+        args: ["-c", "echo $(API_ENDPOINT) > /usr/local/apache2/htdocs/js/config"]
         ports:
         - containerPort: 80
         
