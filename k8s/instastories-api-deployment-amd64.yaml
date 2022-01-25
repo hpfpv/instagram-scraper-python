@@ -63,7 +63,7 @@ spec:
         tier: backend
     spec:
       containers:
-      - name: instastories
+      - name: instastorie-api
         image: hpfpv/instastories-api:amd64-latest
         resources:
           limits:
