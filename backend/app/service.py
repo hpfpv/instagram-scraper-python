@@ -82,6 +82,9 @@ def recordEvents(account_to_mention):
 
 
 def retrieveStories(requestId):
-    response = eventsCollection.find_one({"requestId" : requestId})
+    result = eventsCollection.find_one({"requestId" : requestId})
+    if result:
+        response = {'requestId': result['requestId'], 'time': result['time'], 'account': result['account'], 'request_state': result['request_state']}
+
 
     return json.dumps(response)
