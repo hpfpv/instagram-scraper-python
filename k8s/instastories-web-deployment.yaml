@@ -33,8 +33,12 @@ spec:
         tier: frontend
     spec:
       containers:
-      - name: instastories
+      - name: instastorie-web
         image: hpfpv/instastories-web:latest
+        volumeMounts:
+          - name: config
+            mountPath: "/etc/env"
+            readOnly: true
         resources:
           limits:
             memory: 256Mi
@@ -42,16 +46,20 @@ spec:
           requests:
             memory: 128Mi
             cpu: "0.2"
-        env:
-        - name: API_ENDPOINT
-          valueFrom: 
-            configMapKeyRef:
-              name: instastories-api-config
-              key: api-endpoint
-        command: ["/bin/sh"]
-        args: ["-c", "echo $(API_ENDPOINT) > /usr/local/apache2/htdocs/js/config"]
+        # env:
+        # - name: API_ENDPOINT
+        #   valueFrom: 
+        #     configMapKeyRef:
+        #       name: instastories-api-config
+        #       key: api-endpoint
+        # command: ["sudo echo $API_ENDPOINT > /usr/local/apache2/htdocs/js/config"]
+        # # args: ["-c", "echo $API_ENDPOINT > /usr/local/apache2/htdocs/js/config"]
         ports:
         - containerPort: 80
+      volumes:
+      - name: config
+        configMap:
+          name: instastories-api-config
         
         
         
