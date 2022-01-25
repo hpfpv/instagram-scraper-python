@@ -1,11 +1,13 @@
 // retrieve API endpoint from config file
 const fs = require("fs");
-fs.readFile(__dirname + "/config", (error, api) => {
+fs.readFile("/etc/env/config", (error, api) => {
     if(error) {
         throw error;
     }
-    const apiEndpoint = api.toString() + "/";
+    sessionStorage.setItem("apiEndpoint", api.toString() + "/");
 });
+
+const apiEndpoint = sessionStorage.getItem("apiEndpoint");
 
 
 function Storyfier(storiesArray, rootEl) {
