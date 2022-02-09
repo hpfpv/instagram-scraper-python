@@ -1,11 +1,17 @@
 // retrieve API endpoint from config file
-const fs = require("fs");
-fs.readFile("/etc/env/config", (error, api) => {
-    if(error) {
-        throw error;
-    }
-    sessionStorage.setItem("apiEndpoint", api.toString() + "/");
-});
+
+fetch('/etc/env/config')
+  .then(response => response.text())
+  .then(text => sessionStorage.setItem("apiEndpoint", text + "/"))
+  // outputs the content of the text file
+
+// const fs = require("fs");
+// fs.readFile("/etc/env/config", (error, api) => {
+//     if(error) {
+//         throw error;
+//     }
+//     sessionStorage.setItem("apiEndpoint", api.toString() + "/");
+// });
 
 const apiEndpoint = sessionStorage.getItem("apiEndpoint");
 
