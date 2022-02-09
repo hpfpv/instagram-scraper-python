@@ -37,7 +37,7 @@ spec:
         image: hpfpv/instastories-web:latest
         volumeMounts:
           - name: config
-            mountPath: "/etc/env"
+            mountPath: "/usr/local/apache2/htdocs/js/conf/"
             readOnly: true
         resources:
           limits:
