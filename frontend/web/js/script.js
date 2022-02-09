@@ -1,8 +1,8 @@
 // retrieve API endpoint from config file
 
-fetch('/etc/env/config')
+fetch('/js/conf/config')
   .then(response => response.text())
-  .then(text => sessionStorage.setItem("apiEndpoint", text + "/"))
+  .then(text => sessionStorage.setItem("apiEndpoint", "http://" + text + "/"))
   // outputs the content of the text file
 
 // const fs = require("fs");
