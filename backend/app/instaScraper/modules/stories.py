@@ -125,7 +125,7 @@ def check_for_new_stories(account_to_mention):
 
     stories = get_followers_stories(account_to_mention)
 
-    dir = f"data/logs/{account_to_mention}"
+    dir = f"/app/data/logs/{account_to_mention}"
     dir_history = dir + "/history"
     dir_all = dir + "/all"
     if os.path.exists(dir) == False:
