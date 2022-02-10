@@ -18,7 +18,7 @@ RUN pip3 install -r ./requirements.txt
 
 # copy remaining app files
 COPY ./app /app
-
+RUN mkdir /app/log
 # create group and user
 RUN groupadd -r pyuser && useradd -g pyuser pyuser
 

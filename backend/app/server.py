@@ -5,6 +5,7 @@ import logging
 
 import service
 
+logging.basicConfig(filename="/app/log/instastories-api-log", level=logging.INFO)
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 

@@ -23,4 +23,4 @@ metadata:
   namespace: instastories-namespace
 data:
   config: |
-    instastories-api-service
+    instastories-api-service.instastories-namespace

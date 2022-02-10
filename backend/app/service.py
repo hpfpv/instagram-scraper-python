@@ -15,7 +15,7 @@ mongoURL = os.environ['MONGO_URL']
 dbConnectString = "mongodb://" + mongoUser + ":" + mongoPassword + "@" + mongoURL + ":27017"
 
 mongo = MongoClient(dbConnectString)
-
+logging.basicConfig(filename="/app/log/instastories-api-log", level=logging.INFO)
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
@@ -85,6 +85,4 @@ def retrieveStories(requestId):
     result = eventsCollection.find_one({"requestId" : requestId})
     if result:
         response = {'requestId': result['requestId'], 'time': result['time'], 'account': result['account'], 'request_state': result['request_state']}
-
-
-    return json.dumps(response)
+        return json.dumps(response)

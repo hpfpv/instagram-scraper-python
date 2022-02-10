@@ -31,7 +31,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 @cache(seconds=300)
-def get_followers(instance, account_to_mention):
+def get_followers(account_to_mention):
     """
         Returns a List of userIds of specified account followers
         Uses its own Instaloader instance since account needs to be logged in to retrieve followers

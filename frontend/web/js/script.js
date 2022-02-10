@@ -1,10 +1,11 @@
 // retrieve API endpoint from config file
 
-fetch('/js/conf/config')
-  .then(response => response.text())
-  .then(text => sessionStorage.setItem("apiEndpoint", "http://" + text + "/"))
-  // outputs the content of the text file
-
+const apiEndpoint = "http://192.168.59.101:31567/"
+// fetch('/js/conf/config')
+//   .then(response => response.text())
+//   .then(text => apiEndpoint = "http://" + text + "/")
+//   // outputs the content of the text file
+// console.log(apiEndpoint)
 // const fs = require("fs");
 // fs.readFile("/etc/env/config", (error, api) => {
 //     if(error) {
@@ -13,7 +14,7 @@ fetch('/js/conf/config')
 //     sessionStorage.setItem("apiEndpoint", api.toString() + "/");
 // });
 
-const apiEndpoint = sessionStorage.getItem("apiEndpoint");
+// const apiEndpoint = "http://" + sessionStorage.getItem("apiEndpoint") + "/";
 
 
 function Storyfier(storiesArray, rootEl) {
