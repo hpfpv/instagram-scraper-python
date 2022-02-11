@@ -7,6 +7,9 @@ from pymediainfo import MediaInfo
 # @lru_cache(maxsize=128)
 def profile_picture(url, filename):
     dir = '/app/data/profile'
+    if os.path.exists(dir) == False:
+        os.mkdir(dir)
+
     name = f"{dir}/{filename}.jpg"
     if os.path.exists(name) == False:
         p = requests.get(url, allow_redirects=True)
@@ -17,6 +20,9 @@ def profile_picture(url, filename):
 def story_media(video, display, is_video, filename):
     
     dir = '/app/data/media'
+    if os.path.exists(dir) == False:
+        os.mkdir(dir)
+
     video_file = f"{dir}/{filename}.mp4"
     display_file = f"{dir}/{filename}.jpg"
 

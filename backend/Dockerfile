@@ -18,15 +18,16 @@ RUN pip3 install -r ./requirements.txt
 
 # copy remaining app files
 COPY ./app /app
-RUN mkdir /app/log
-# create group and user
-RUN groupadd -r pyuser && useradd -g pyuser pyuser
+RUN mkdir /app/log /app/data /app/data/logs /app/data/media /app/data/profile
 
-# set ownership and permissions
-RUN chown -R pyuser:pyuser /app
+# # create group and user
+# RUN groupadd -r pyuser && useradd -g pyuser pyuser
 
-# switch to user pyuser
-USER pyuser
+# # set ownership and permissions
+# RUN chown -R pyuser:pyuser /app
+
+# # switch to user pyuser
+# USER pyuser
 
 # expose container port
 EXPOSE 5000
