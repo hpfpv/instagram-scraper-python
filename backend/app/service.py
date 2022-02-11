@@ -84,5 +84,9 @@ def recordEvents(account_to_mention):
 def retrieveStories(requestId):
     result = eventsCollection.find_one({"requestId" : requestId})
     if result:
-        response = {'requestId': result['requestId'], 'time': result['time'], 'account': result['account'], 'request_state': result['request_state'], 'stories': result['stories']}
+        if result['request_state'] == 'completed':
+            response = {'requestId': result['requestId'], 'time': result['time'], 'account': result['account'], 'request_state': result['request_state'], 'stories': result['stories']}
+        else:
+            response = {'requestId': result['requestId'], 'time': result['time'], 'account': result['account'], 'request_state': result['request_state']}
+        
         return json.dumps(response)
