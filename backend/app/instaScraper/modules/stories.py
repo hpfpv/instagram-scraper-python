@@ -191,6 +191,9 @@ def check_for_new_stories(account_to_mention):
 
                                 # saving storyItemJson to S3 for logs
                                 file_history = f"{dir_history}/{story_owner}/{story_id}.json"
+                                if os.path.exists(f"{dir_history}/{story_owner}") == False:
+                                    os.mkdir(f"{dir_history}/{story_owner}")
+                                    
                                 if os.path.exists(file_history) == False:
                                     f = open(file_history, 'w')
                                     f.write(json.dumps(storyItemJson))
