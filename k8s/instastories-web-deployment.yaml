@@ -4,14 +4,38 @@ metadata:
   name: instastories-web-service
   namespace: instastories-namespace
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: instastories
     tier: frontend
   ports:
     - protocol: TCP
       port: 80
-      nodePort: 31568
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata: 
+  name: instastories-web-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  namespace: instastories-namespace
+spec:
+  tls:
+    - secretName: 127-0-0-1-nip-io-tls
+      hosts:
+        - '*.127.0.0.1.nip.io'
+  rules:
+  - host: instascraper-web.127.0.0.1.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend: 
+          service: 
+            name: instastories-web-service
+            port:
+              number: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -26,14 +50,23 @@ spec:
     matchLabels:
       app: instastories
       tier: frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app: instastories
         tier: frontend
     spec:
       containers:
       - name: instastorie-web
+        imagePullPolicy: Always
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
         image: hpfpv/instastories-web:latest
         volumeMounts:
           - name: config
@@ -46,6 +79,7 @@ spec:
           requests:
             memory: 128Mi
             cpu: "0.2"
+        securityContext: {}
         # env:
         # - name: API_ENDPOINT
         #   valueFrom: 

@@ -3,6 +3,10 @@
 **/.DS_Store/**
 .venv/
 
+#key and cert
+*.crt
+*.key
+
 # Created by https://www.gitignore.io/api/osx,linux,python,windows,pycharm,visualstudiocode
 
 ### Linux ###

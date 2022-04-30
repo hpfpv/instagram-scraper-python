@@ -15,7 +15,7 @@ mongoURL = os.environ['MONGO_URL']
 dbConnectString = "mongodb://" + mongoUser + ":" + mongoPassword + "@" + mongoURL + ":27017"
 
 mongo = MongoClient(dbConnectString)
-logging.basicConfig(filename="/app/log/instastories-api-log", level=logging.INFO)
+logging.basicConfig(filename="/app/logging/instastories-api-log", level=logging.DEBUG)
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
