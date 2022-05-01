@@ -2,3 +2,8 @@ export DOMAIN=127.0.0.1.nip.io
 openssl req -x509 -newkey rsa:4096 -sha256 -nodes -keyout minikube_ingress_tls_self.key -out minikube_ingress_tls_self.crt -subj "/CN=*.127.0.0.1.nip.io" -days 365
 
 kubectl create secret tls 127-0-0-1-nip-io-tls --cert=minikube_ingress_tls_self.crt --key=minikube_ingress_tls_self.key
+
+
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl"
+
+

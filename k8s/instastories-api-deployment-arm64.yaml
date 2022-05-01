@@ -25,7 +25,7 @@ metadata:
   namespace: instastories-namespace
 spec:
   rules:
-  - host: instascraper-api.127.0.0.1.nip.io
+  - host: instastories-api.127.0.0.1.nip.io
     http:
       paths:
       - path: /

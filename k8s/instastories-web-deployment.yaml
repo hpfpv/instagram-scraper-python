@@ -26,7 +26,7 @@ spec:
       hosts:
         - '*.127.0.0.1.nip.io'
   rules:
-  - host: instascraper-web.127.0.0.1.nip.io
+  - host: instastories.127.0.0.1.nip.io
     http:
       paths:
       - path: /
