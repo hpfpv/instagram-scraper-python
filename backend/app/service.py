@@ -24,7 +24,7 @@ eventsCollection = instastoriesDb["events"]
 
 def getStoriesTagged(requestId, account_to_mention):
     try:
-        storiesJson = check_for_new_stories(account_to_mention)
+        storiesJson = check_for_new_stories(requestId, account_to_mention)
     except Exception as e:
         logger.info(e)
         response = eventsCollection.update_one(
@@ -67,8 +67,11 @@ def recordEvents(account_to_mention):
         "request_state": "in-progress" ,
     }
 
-    log["message"] = json.dumps(record)
+    log["status"] = "completed"
+    log["record"] = record
+    
     logger.info(json.dumps(log))
+    print(json.dumps(log))
 
     eventsCollection.insert_one(record)  
 
@@ -82,11 +85,29 @@ def recordEvents(account_to_mention):
 
 
 def retrieveStories(requestId):
-    result = eventsCollection.find_one({"requestId" : requestId})
-    if result:
-        if result['request_state'] == 'completed':
-            response = {'requestId': result['requestId'], 'time': result['time'], 'account': result['account'], 'request_state': result['request_state'], 'stories': result['stories']}
-        else:
-            response = {'requestId': result['requestId'], 'time': result['time'], 'account': result['account'], 'request_state': result['request_state']}
-        
+    log = {}
+    log["function"] = "retrieve_stories"
+
+    try:
+        result = eventsCollection.find_one({"requestId" : requestId})
+    except Exception as err:
+        log["status"] = f"error: {str(err)}"
+        response = {'requestId': requestId, 'time': "N/A", 'account': "N/A", 'request_state': "error"}
+        logger.info(json.dumps(log))
+        print(json.dumps(log))
         return json.dumps(response)
+    else:
+        if result:
+            if result['request_state'] == 'completed':
+                response = {'requestId': result['requestId'], 'time': result['time'], 'account': result['account'], 'request_state': result['request_state'], 'stories': result['stories']}
+                log["status"] = "completed"
+                log["response"] = response
+                logger.info(json.dumps(log))
+                print(json.dumps(log))
+            else:
+                response = {'requestId': result['requestId'], 'time': result['time'], 'account': result['account'], 'request_state': result['request_state']}
+                log["status"] = "completed"
+                log["response"] = response
+                logger.info(json.dumps(log))
+                print(json.dumps(log))
+            return json.dumps(response)

@@ -47,11 +47,16 @@ def get_scraper():
     
 # Instaloader Instances initiation
 @cache(seconds=3600, maxsize=1)
-def get_instance():
+def get_instance(requestId):
     """
         Creates Instaloader instance with a random scraper from the scraper List
         Returns instance
     """
+
+    log = {}
+    log["function"] = "get_instance"
+    log["requestId"] = requestId
+
     success = False
     while success == False:
         scraper = get_scraper()
@@ -61,21 +66,14 @@ def get_instance():
             random_instance = instaloader.Instaloader()
             random_instance.login(user=username, passwd=password)
         except (Exceptions.ConnectionException, Exceptions.BadCredentialsException, Exceptions.InvalidArgumentException) as err:
-            message = {
-                "function": "get_instance",
-                "error": str(err),
-                "details": f"scraper: {username}"
-            }
-            print (json.dumps(message))
-            logger.info(json.dumps(message))
+            log["status"] = f"error: {str(err)}"
+            log["details"] = f"scraper: {username}"
+            logger.info(json.dumps(log))
         else:
             success = True
-            message = {
-                "function": "get_instance",
-                "status": "instance is successfully created",
-                "details": f"scraper: {username}"
-            }
-            print (json.dumps(message))
-            logger.info(json.dumps(message))
+            log["status"] = "completed"
+            log["scraper"]= username
+            logger.info(json.dumps(log))
+            print(json.dumps(log))
 
     return random_instance
