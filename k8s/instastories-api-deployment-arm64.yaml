@@ -7,7 +7,7 @@ metadata:
     app: instastories
     tier: backend
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     app: instastories
     tier: backend
@@ -25,7 +25,7 @@ metadata:
   namespace: instastories-namespace
 spec:
   rules:
-  - host: instastories-api.127.0.0.1.nip.io
+  - host: instastories-api.192.168.64.24.nip.io
     http:
       paths:
       - path: /

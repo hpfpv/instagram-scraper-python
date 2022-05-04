@@ -1,6 +1,6 @@
 // retrieve API endpoint from config file
 
-const apiEndpoint = "http://instascraper-api.127.0.0.1.nip.io"
+const apiEndpoint = "instastories-api.192.168.64.25.nip.io"
 // fetch('/js/conf/config')
 //   .then(response => response.text())
 //   .then(text => apiEndpoint = "http://" + text + "/")
