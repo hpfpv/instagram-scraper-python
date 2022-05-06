@@ -51,7 +51,7 @@ pipeline {
             }
         }
     		steps {
-    			withKubeConfig([credentialsId: 'multipass-kubernetes-cluster-config', serverUrl: 'https://192.168.64.30:6443']) {
+    			withKubeConfig([credentialsId: 'multipass-kubernetes-kubeconfig-admin', serverUrl: 'https://192.168.64.30:6443']) {
         		    sh 'kubectl apply -f .'
         		}
     		}
