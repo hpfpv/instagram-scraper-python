@@ -9,9 +9,9 @@ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stabl
 
 You can now join any number of the control-plane node running the following command on each as root:
 
-  kubeadm join kube-lb:6443 --token dr5ky9.scehcq6wl2h0v3uv \
-	--discovery-token-ca-cert-hash sha256:006948473f34d216a401cb47a9a8bb302a458fcde42e37cd3ea135ec820fe133 \
-	--control-plane --certificate-key 679d24afc34013dbca3867d7bb22f005942a196afb5162145532c7d5d938914f
+  kubeadm join kube-lb:6443 --token d54mqm.b85nmdy0rzzf0sil \
+	--discovery-token-ca-cert-hash sha256:039a9f600c786e313731d32c7f32f9e91172b74885df0028d17d1dd17e5ed1e8 \
+	--control-plane --certificate-key 791b9bed28590e136437d7c9ef41959758caf5c2419af9fa1f39498e6bdbd08b
 
 Please note that the certificate-key gives access to cluster sensitive data, keep it secret!
 As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you can use
@@ -19,13 +19,6 @@ As a safeguard, uploaded-certs will be deleted in two hours; If necessary, you c
 
 Then you can join any number of worker nodes by running the following on each as root:
 
-kubeadm join kube-lb:6443 --token dr5ky9.scehcq6wl2h0v3uv \
---discovery-token-ca-cert-hash sha256:006948473f34d216a401cb47a9a8bb302a458fcde42e37cd3ea135ec820fe133 
+kubeadm join kube-lb:6443 --token d54mqm.b85nmdy0rzzf0sil \
+	--discovery-token-ca-cert-hash sha256:039a9f600c786e313731d32c7f32f9e91172b74885df0028d17d1dd17e5ed1e8 
 
-sudo cat >> /etc/hosts << EOF
-192.168.64.30 kube-lb
-192.168.64.28 kube-master-1
-192.168.64.29 kube-master-2
-192.168.64.31 kube-worker-1
-192.168.64.32 kube-worker-2
-EOF

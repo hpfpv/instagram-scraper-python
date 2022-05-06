@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+    stages {
+        stage('Frontend - build image') {
+	        when { changeset "frontend/web/**"}
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'github-access-token-hpfpv, passwordVariable: 'pass', usernameVariable: 'user')]) {
+                        frontend = docker.build("hpfpv/instastories-web:${BUILD_ID}", 'frontend')
+                    }
+                }
+            }
+        }
+        stage('Frontend - push image to dockerhub') {
+	        when { changeset "frontend/web/**"}
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-access-token-hpfpv') {
+                        frontend.push('latest')
+                        frontend.push("${BUILD_ID}")
+                    }
+                }
+            }
+        }
+        stage('Backend - build image') {
+	        when { changeset "backend/app/**"}
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'github-access-token-hpfpv', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                        backend = docker.build("hpfpv/instastories-api:arm64-${BUILD_ID}", 'backend')
+                    }
+                }
+            }
+        }
+        stage('Backend - push image to dockerhub') {
+	        when { changeset "backend/app/**"}
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-access-token-hpfpv') {
+                        backend.push('latest')
+                        backend.push("${BUILD_ID}")
+                    }
+                }
+            }
+        }
+	    stage('Deploy to K8s') {
+        when {
+            anyOf{
+                changeset "frontend/web/**"
+                changeset "backend/app/**"
+                changeset "k8s/*.yaml"
+            }
+        }
+    		steps {
+    			withKubeConfig([credentialsId: 'multipass-kubernetes-cluster-admin', serverUrl: 'https://192.168.64.30:6443']) {
+        		    sh 'kubectl apply -f .'
+        		}
+    		}
+	    }
+    }
+    post {
+    	always {
+    		sh 'docker logout'
+    	}
+    }
+}
