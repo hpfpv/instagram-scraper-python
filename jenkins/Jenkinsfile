@@ -12,7 +12,7 @@ pipeline {
             }
         }
         stage('Frontend - push image to dockerhub') {
-	        when { changeset "frontend/web/**"}
+	        when { changeset "frontend/**"}
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-access-token-hpfpv') {
@@ -33,7 +33,7 @@ pipeline {
             }
         }
         stage('Backend - push image to dockerhub') {
-	        when { changeset "backend/app/**"}
+	        when { changeset "backend/**"}
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-access-token-hpfpv') {
@@ -46,9 +46,7 @@ pipeline {
 	    stage('Deploy to K8s') {
         when {
             anyOf{
-                changeset "frontend/**"
-                changeset "backend/**"
-                changeset "k8s/*.yaml"
+                changeset "k8s/manifests/**"
                 changeset "jenkins/**"
             }
         }
