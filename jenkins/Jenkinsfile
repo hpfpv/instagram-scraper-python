@@ -52,7 +52,7 @@ pipeline {
         }
     		steps {
     			withKubeConfig([credentialsId: 'multipass-kubernetes-kubeconfig-admin', serverUrl: 'https://192.168.64.30:6443']) {
-        		    sh 'kubectl apply -f'
+        		    sh 'kubectl apply -f k8s/manifests/'
         		}
     		}
 	    }
