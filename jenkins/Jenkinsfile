@@ -5,7 +5,7 @@ pipeline {
 	        when { changeset "frontend/web/**"}
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'github-access-token-hpfpv, passwordVariable: 'pass', usernameVariable: 'user')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github-access-token-hpfpv', passwordVariable: 'pass', usernameVariable: 'user')]) {
                         frontend = docker.build("hpfpv/instastories-web:${BUILD_ID}", 'frontend')
                     }
                 }
