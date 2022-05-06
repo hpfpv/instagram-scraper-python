@@ -25,7 +25,7 @@ metadata:
   namespace: instastories-namespace
 spec:
   rules:
-  - host: instastories-api.192.168.64.24.nip.io
+  - host: instastories-api.192.168.64.28.nip.io
     http:
       paths:
       - path: /
