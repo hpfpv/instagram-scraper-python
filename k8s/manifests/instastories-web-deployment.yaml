@@ -22,11 +22,11 @@ metadata:
   namespace: instastories-namespace
 spec:
   tls:
-    - secretName: 192-168-64-24-nip-io-tls
+    - secretName: 192-168-64-28-nip-io-tls
       hosts:
-        - '*.192.168.64.24.nip.io'
+        - '*.192.168.64.28.nip.io'
   rules:
-  - host: instastories.192.168.64.24.nip.io
+  - host: instastories.192.168.64.28.nip.io
     http:
       paths:
       - path: /
