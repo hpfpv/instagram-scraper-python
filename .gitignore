@@ -2,6 +2,8 @@
 **/.venv/**
 **/.DS_Store/**
 .venv/
+**/temp/**
+temp
 
 #key and cert
 *.crt
